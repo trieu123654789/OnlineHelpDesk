@@ -57,9 +57,7 @@ h4 {
 
 img {
     width: 100%;
-    margin-top: -100px;
-    margin-bottom: -30px
-   
+    overflow: hidden;
 }
 
 ul {
@@ -142,22 +140,24 @@ html {
 /* Sidebar Menu */
 
 .menu .image {
-    margin-top: -500px;
+    margin-top: 50px;
 }
 
+.menu .image img {
+    width: 160px;
+    height: 160px;
+    border-radius: 10%;
+    text-align: center;
+}
 
 .menu .author-content {
     margin: 20px 0px 40px 0px;
 }
 
-    .menu .author-content h5 {
-        margin-top: -20px;
-        margin-bottom: 0px;
-        text-transform: uppercase;
-        color: #fff;
-        font-size: 20px;
-        font-weight: bold
-    }
+.menu .author-content h4 {
+    margin-bottom: 0px;
+	text-transform: uppercase;
+}
 
 .menu .author-content span {
     font-size: 12px;
@@ -192,7 +192,7 @@ html {
 
 .menu .copyright-text {
     position: relative;
-    margin-top: 30px;
+    margin-top: 60px;
 }
 
 .menu .copyright-text p {
@@ -801,61 +801,4 @@ section.contact-me {
     .isotope-toolbar {
         margin-bottom: 20px;
     }
-}
-
-.table{
-    margin-top: 30px
-}
-.card {
-    width: 110%%;
-    margin: 20px auto;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-    overflow: hidden;
-}
-
-.card-body {
-    padding: 20px;
-}
-
-.table {
-    width: 100%; 
-    border-collapse: collapse;
-    font-family: Arial, sans-serif;
-    table-layout: fixed; 
-}
-
-    .table th,
-    .table td {
-        padding: 12px 15px;
-        text-align: left;
-        border-bottom: 1px solid #ddd;
-        word-wrap: break-word;
-    }
-
-
-.badge {
-    padding: 8px 12px;
-    border-radius: 4px;
-    font-size: 14px;
-}
-
-.badge-danger {
-    background-color: #ff6666;
-    color: #fff;
-}
-
-.badge-warning {
-    background-color: #ffc107;
-    color: #fff;
-}
-
-.badge-info {
-    background-color: #17a2b8;
-    color: #fff;
-}
-
-.badge-success {
-    background-color: #28a745;
-    color: #fff;
 }

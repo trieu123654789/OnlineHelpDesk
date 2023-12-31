@@ -196,6 +196,13 @@
     <Content Include="Images\woman-chair-sunshine.jpg" />
     <Content Include="Images\woman-feeling.jpg" />
     <Content Include="Images\woman-pretty.jpg" />
+    <Content Include="Js\chart.js" />
+    <Content Include="Js\dashboard.js" />
+    <Content Include="Js\file-upload.js" />
+    <Content Include="Js\hoverable-collapse.js" />
+    <Content Include="Js\jquery.cookie.js" />
+    <Content Include="Js\off-canvas.js" />
+    <Content Include="Js\template.js" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.esm.js" />

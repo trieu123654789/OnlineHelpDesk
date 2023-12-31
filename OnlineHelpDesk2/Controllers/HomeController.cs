@@ -13,6 +13,17 @@ namespace OnlineHelpDesk1.Controllers
         private OHDDBContext db = new OHDDBContext();
         public ActionResult Index()
         {
+            if (Session["AccountID"] != null)
+            {
+                int accountID = (int)Session["AccountID"];
+                var user = db.Accounts.FirstOrDefault(u => u.AccountID == accountID);
+
+                if (user != null)
+                {
+                    ViewBag.FullName = user.Fullname; 
+                }
+            }
+
             return View();
         }
 
@@ -38,6 +49,11 @@ namespace OnlineHelpDesk1.Controllers
             }
 
             return View();
+        }
+        public ActionResult Logout()
+        {
+            Session.Clear(); 
+            return RedirectToAction("Login", "WelcomePage");
         }
     }
 }

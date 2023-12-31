@@ -32,7 +32,7 @@ namespace OnlineHelpDesk1.Controllers
             if (admin != null)
             {
                 Session["AccountID"] = admin.AccountID;
-                return RedirectToAction("Contact", "Home");
+                return RedirectToAction("Index", "Home");
             }
             else if (enduser != null)
             {
@@ -68,7 +68,7 @@ namespace OnlineHelpDesk1.Controllers
             {
                 db.GuestLetters.Add(letter);
                 db.SaveChanges();
-                ViewBag.SuccessMessage = "Letter sent successfully! Back to <a href='" + Url.Action("GuestLetter", "Guest") + "'>welcome page</a>";
+                ViewBag.SuccessMessage = "Letter sent successfully!";
                 return View(letter);
 
             }
