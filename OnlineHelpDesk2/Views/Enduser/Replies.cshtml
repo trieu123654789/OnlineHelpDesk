@@ -1,0 +1,49 @@
+﻿@model IEnumerable<OnlineHelpDesk2.Models.ReplyOfAssignee>
+
+@{
+    ViewBag.Title = "Replies";
+    Layout = "~/Views/Shared/EndUser_LayoutPage.cshtml";
+}
+@if (Model.Any())
+{
+    using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <table class="table" id="myTable" style="font-size: 12px;">
+            <thead>
+                <tr>
+                    <th style="width: 30px">Request ID</th>
+                    <th style="width: 160px">Requestor Name</th>
+                    <th>Facility Name</th>
+                    <th>Request Date</th>
+                    <th style="width: 200px">Description</th>
+                    <th style="width: 160px">Assignee Name</th>
+                    <th>Reply Date</th>
+                    <th style="width: 300px">Reply Content</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.RequestID</td>
+                        <td>@item.RequestorFullName</td>
+                        <td>@item.FacilityName</td>
+                        <td>@item.RequestDate.ToString("dd/MM/yyyy")</td>
+                        <td>@item.RequestContent</td>
+                        <td>@item.AssigneeFullName</td>
+                        <td>@item.ReplyDate.ToString("dd/MM/yyyy")</td>
+                        <td>@item.ReplyContent</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+}
+else
+{
+    <p style="color: #000">There are no reply.</p>
+    <a href="@Url.Action("RequestHistory", "Enduser")" class="badge badge-info">View Completed Requests</a>
+}
+

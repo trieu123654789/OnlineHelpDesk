@@ -1,0 +1,43 @@
+﻿@model List<OnlineHelpDesk2.Models.RequestHistory>
+@{
+    ViewBag.Title = "RequestList";
+    Layout = "~/Views/Shared/FaciHeader_LayoutPage.cshtml";
+}
+<a href="@Url.Action("RequestList", "FaciHeader")" class="badge badge-info">In Progress Requests</a>
+<a href="@Url.Action("CompletedRequests", "FaciHeader")" class="badge badge-info">Completed Requests</a>
+<table class="table" id="myTable" style="font-size: 13px;">
+    <thead>
+        <tr>
+            <th width="80px">RequestID</th>
+            <th>Requestor Name</th>
+            <th>Request Date</th>
+            <th>Assignee Name</th>
+            <th>Request Content</th>
+            <th>Severity Level</th>
+            <th>Status</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td width="80px">@item.RequestID</td>
+                <td>@item.RequestorFullName</td>
+                <td>@item.RequestDate.ToString("dd/MM/yyyy")</td>
+                <td>@item.AssigneeFullName</td>
+                <td>@item.RequestContent</td>
+                <td>@item.SeverityLevels</td>
+                @if (item.Status == "Completed")
+                {
+                    <td><label class="badge badge-success" style="font-size: 0.8em;">@item.Status</label></td>
+                }
+                else
+                {
+                    <td> <label class="badge badge-info" style="font-size: 0.8em;">@item.Status</label></td>
+                }
+            </tr>
+        }
+    </tbody>
+</table>
+

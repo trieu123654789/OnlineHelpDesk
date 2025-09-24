@@ -1,0 +1,40 @@
+﻿
+@model IEnumerable<OnlineHelpDesk2.Models.RequestHistory>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/Assignee_LayoutPage.cshtml";
+}
+
+    <h3 style="color: #000; font-weight: bold;">Completed Request</h3>
+    <table class="table" id="myTable" style="font-size: 12px;">
+        <thead>
+            <tr>
+                <th width="80px">RequestID</th>
+                <th width="90px">RequestorID</th>
+                <th>Requestor Name</th>
+                <th>Facility Name</th>
+                <th>RequestDate</th>
+                <th>RequestContent</th>
+                <th>SeverityLevels</th>
+                <th>ReplyContent</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td width="80px">@item.RequestID</td>
+                    <td width="90px">@item.RequestorID</td>
+                    <td>@item.RequestorFullName</td>
+                    <td>@item.FacilityName</td>
+                    <td>@item.RequestDate.ToString("dd/MM/yyyy")</td>
+                    <td>@item.RequestContent</td>
+                    <td>@item.SeverityLevels</td>
+                    <td>@item.ReplyContent</td>
+                    <td><label class="badge badge-warning" style="font-size: 0.8em;">@item.Status</label></td>
+
+                </tr>
+            }
+        </tbody>
+    </table>

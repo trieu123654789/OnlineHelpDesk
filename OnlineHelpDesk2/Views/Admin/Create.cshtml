@@ -1,0 +1,163 @@
+﻿@model OnlineHelpDesk2.Models.Account
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/AdminCreate_LayoutPage.cshtml";
+}
+
+
+<h2 style="color: #000; font-weight: bold; text-align: center;">Create Account</h2>
+@using (Html.BeginForm("Create", "Admin", FormMethod.Post, new { enctype = "multipart/form-data", id = "createForm" }))
+{
+    @Html.AntiForgeryToken()
+
+<div class="container form-horizontal">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            @Html.ValidationSummary(true, "", new { @class = "text-danger", style = "color: black;" })
+            @*<div class="form-group">
+                    @Html.Label("Creation Method", new { @class = "control-label col-md-2", style = "color: black;" })
+                    <div class="col-md-10">
+                        @Html.RadioButton("creationMethod", "manual", new { @checked = "checked", style = "color: black;" }) Manual Entry
+                        @Html.RadioButton("creationMethod", "file") Upload Excel File
+                    </div>
+                </div>*@
+            <!-- Other form fields for manual entry -->
+            <div id="manualEntrySection">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Username, "Username", new { @class = "control-label col-md-2", style = "color: black;" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Username, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Username, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Password, "Password", new { @class = "control-label col-md-2", style = "color: black;" })
+                    <div class="col-md-10">
+                        @Html.PasswordFor(model => model.Password, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Email, "Email", new { @class = "control-label col-md-2", style = "color: black;" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.TypeID, "User Type", new { @class = "control-label col-md-2", style = "color: black;" })
+                    <div class="col-md-10">
+                        @Html.DropDownListFor(model => model.TypeID, (SelectList)ViewBag.UserTypeList, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.TypeID, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.FacilityID, "Facility", new { @class = "control-label col-md-2", style = "color: black;" })
+                    <div class="col-md-10">
+                        @Html.DropDownListFor(model => model.FacilityID, (SelectList)ViewBag.FacilityList, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.FacilityID, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Fullname, "Fullname", new { @class = "control-label col-md-2", style = "color: black;" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Fullname, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Fullname, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Gender, "Gender", new { @class = "control-label col-md-2", style = "color: black;" })
+                    <div class="col-md-10">
+                        @Html.DropDownList("Gender", null, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Gender, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Birthday, "Birthday", new { @class = "control-label col-md-2", style = "color: black;" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Birthday, new { htmlAttributes = new { @class = "form-control", @type = "date" } })
+                        @Html.ValidationMessageFor(model => model.Birthday, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Phone, "Phone", new { @class = "control-label col-md-2", style = "color: black;" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Phone, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Phone, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <br />
+
+                <div class="form-group">
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Create" class="btn btn-success" />
+                    </div>
+                </div>
+                <br />
+            </div>
+        </div>
+    </div>
+</div>
+        }
+<style>
+    /* Tạo đường viền và bo góc cho form */
+    .form-horizontal {
+        padding: 20px;
+        margin-top: 10px;
+        margin-left: 80px;
+    }
+
+    /* Định dạng các trường và ô nhập liệu */
+    .table {
+        width: 100%;
+    }
+
+        .table td {
+            padding: 10px;
+        }
+
+    /* Định dạng ô nhập liệu và ô chọn */
+    select,
+    textarea {
+        width: 100%;
+        padding: 8px;
+        margin: 5px 0;
+        display: inline-block;
+        border: 1px solid #ccc;
+        box-sizing: border-box;
+        border-radius: 4px;
+    }
+
+    /* Định dạng nút Submit */
+    .btn-primary {
+        background-color: #007bff;
+        color: #fff;
+        padding: 10px 20px;
+        border: none;
+        width: 200px;
+        border-radius: 5px;
+        cursor: pointer;
+        margin-left: 45%; /* Đẩy nút sang phải */
+        margin-right: auto; /* Đẩy nút sang trái */
+        display: block; /* Để margin:auto có hiệu lực */
+    }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+
+    /* Định dạng màu văn bản của tiêu đề */
+    h2.text-center {
+        color: #000; /* Màu đen */
+    }
+</style>
+

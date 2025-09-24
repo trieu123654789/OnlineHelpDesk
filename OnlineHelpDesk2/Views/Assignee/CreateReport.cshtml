@@ -1,0 +1,61 @@
+﻿
+@{
+    ViewBag.Title = "CreateReport";
+    Layout = "~/Views/Shared/ReportAssignee_LayoutPage.cshtml";
+    var reportDate = ViewData["ReportDate"] as List<OnlineHelpDesk2.Models.Report>;
+    var requestDate = ViewData["RequestDate"] as List<OnlineHelpDesk2.Models.Request>;
+}
+
+@using (Html.BeginForm("CreateReport", "Assignee", FormMethod.Post, new { @class = "form-horizontal" }))
+{
+    @Html.AntiForgeryToken()
+    <label style="color: #000" for="month">Month of request:</label>
+    <select id="month" onchange="updateRequestMonths()" style="width:50%">
+        <option value=""></option>
+        @foreach (var item in ViewBag.ReportDate)
+        {
+            <option value="@item.ReportMonth">@item.Month</option>
+        }
+
+    </select>
+    <br />
+    <br />
+    <table id="reportTable" class="table">
+        <thead>
+            <tr>
+                <th>Request ID</th>
+                <th>Request Month</th>
+                <th>Request Content</th>
+                <th>Feedback Content</th>
+                <th>Reply Content</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in ViewBag.RequestDate)
+            {
+
+                <tr class="month-option month-@item.RequestDate.Month" data-month="@item.RequestDate.Month">
+                    <td>@item.RequestID</td>
+                    <td>@item.RequestDate.ToString("dd/MM/yyyy")</td>
+                    <td>@item.RequestContent</td>
+
+                    @if (item.SummaryReports != null && ((IEnumerable<OnlineHelpDesk2.Models.SummaryReport>)item.SummaryReports).Any())
+                    {
+                        var firstSummaryReport = ((IEnumerable<OnlineHelpDesk2.Models.SummaryReport>)item.SummaryReports).First();
+
+                        <td>@firstSummaryReport.Feedback.FeedbackContent</td>
+                        <td>@firstSummaryReport.Reply.ReplyContent</td>
+                    }
+                    else
+                    {
+                        <td>No Feedback</td>
+                        <td>No Reply</td>
+                    }
+                </tr>
+            }
+
+        </tbody>
+    </table>
+
+    <div id="noRequestsMessage" style="color: red; display: none; margin-left: 3%;">No requests for the selected month.</div>
+}

@@ -1,0 +1,71 @@
+﻿@model IEnumerable<OnlineHelpDesk2.Models.RequestHistory>
+
+@{
+    ViewBag.Title = "RequestHistory";
+    Layout = "~/Views/Shared/EndUser_LayoutPage.cshtml";
+}
+
+<a href="@Url.Action("RequestHistory", "Enduser")" class="badge badge-info">View Completed Requests</a>
+<br />
+<br />
+@if (Model.Any())
+{
+    using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <table class="table" id="myTable" style="font-size: 12px;">
+            <thead>
+                <tr>
+                    <th>Request ID</th>
+                    <th style="width: 160px">Requestor Name</th>
+                    <th>Facility Name</th>
+                    <th style="width: 160px">Assignee Name</th>
+                    <th>Request Date</th>
+                    <th style="width: 90px">Severity</th>
+                    <th style="width: 200px">Description</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.RequestID</td>
+                        <td>@item.RequestorFullName</td>
+                        <td>@item.FacilityName</td>
+                        <td>@item.AssigneeFullName</td>
+                        <td>@item.RequestDate.ToString("dd/MM/yyyy")</td>
+                        <td>@item.SeverityLevels</td>
+                        <td>@item.RequestContent</td>
+                        <td><label class="badge badge-warning" style="font-size: 0.8em;">@item.Status</label></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <style>
+            .custom-button {
+                background-color: #007bff;
+                color: #fff;
+                border: none;
+                padding: 5px 10px;
+                text-align: center;
+                text-decoration: none;
+                display: inline-block;
+                font-size: 14px;
+                cursor: pointer;
+                border-radius: 4px;
+            }
+
+                .custom-button:hover {
+                    background-color: #0056b3;
+                    color: #fff;
+                }
+        </style>
+    }
+}
+else
+{
+    <p style="color: #000">There are no in progress request.</p>
+}
+

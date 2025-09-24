@@ -1,0 +1,50 @@
+﻿@model IEnumerable<OnlineHelpDesk2.Models.FeedbackList>
+
+@{
+    ViewBag.Title = "Feedback";
+    Layout = "~/Views/Shared/Admin_LayoutPage.cshtml";
+}
+<h2 style="color: #000; font-weight: bold;">Feeback of End-user</h2>
+@if (Model.Any())
+{
+    using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <table class="table" id="myTable" style="font-size: 12px;">
+            <thead>
+                <tr>
+                    <th style="width: 30px">Request ID</th>
+                    <th style="width: 160px">Requestor Name</th>
+                    <th>Facility Name</th>
+                    <th>Request Date</th>
+                    <th style="width: 200px">Description</th>
+                    <th>Assignee Name</th>
+                    <th>Feedback Date</th>
+                    <th style="width: 300px">Feedback Content</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.RequestID</td>
+                        <td>@item.RequestorFullName</td>
+                        <td>@item.FacilityName</td>
+                        <td>@item.RequestDate.ToString("dd/MM/yyyy")</td>
+                        <td>@item.RequestContent</td>
+                        <td>@item.AssigneeFullName</td>
+                        <td>@item.FeedbackTime.ToString("dd/MM/yyyy")</td>
+                        <td>@item.FeedbackContent</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+}
+else
+{
+    <p style="color: #000">There are no reply.</p>
+    <a href="@Url.Action("Requests", "Enduser")" class="badge badge-info">View In Progress Requests</a>
+}
+

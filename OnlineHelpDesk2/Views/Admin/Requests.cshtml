@@ -1,0 +1,98 @@
+﻿@model IEnumerable<OnlineHelpDesk2.Models.RequestHistory>
+@{
+    ViewBag.Title = "Requests";
+    Layout = "~/Views/Shared/Admin_LayoutPage.cshtml";
+}
+
+<a href="/Admin/UnassignedRequest" class="badge badge-info">View Unassigned Requests</a>
+<br />
+<br />
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <table class="table" id="myTable" style="font-size: 12px;">
+        <thead>
+            <tr>
+                <th>Request ID</th>
+                <th style="width: 160px">Requestor Name</th>
+                <th>Facility Name</th>
+                <th>Facility-header Name</th>
+                <th style="width: 160px">Assignee Name</th>
+                <th>Request Date</th>
+                <th style="width: 90px">Severity</th>
+                <th style="width: 200px">Description</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.RequestID</td>
+                    <td>@item.RequestorFullName</td>
+                    <td>@item.FacilityName</td>
+                    <td>
+                        @using System.Data.SqlClient
+                        @using System.Configuration
+
+                        @{
+                            int requestId = item.RequestID;
+
+                            string connectionString = ConfigurationManager.ConnectionStrings["OHDDBContext"].ToString();
+
+                            using (var connection = new SqlConnection(connectionString))
+                            {
+                                connection.Open();
+
+                                string query = $"SELECT a.Fullname AS FacilityHeadName FROM Requests R INNER JOIN Facilities F ON R.FacilityID = F.FacilityID INNER JOIN Accounts RA ON R.RequestorID = RA.AccountID INNER JOIN Accounts AA ON R.AssigneeID = AA.AccountID INNER JOIN Accounts A ON R.FacilityID = A.FacilityID WHERE a.facilityID != 1 and RequestID = {requestId} GROUP BY a.Fullname;";
+
+                                using (var command = new SqlCommand(query, connection))
+                                {
+                                    string facilityHeadName = (string)command.ExecuteScalar();
+
+                                    // Kiểm tra và gán giá trị cho biến facilityHeadName
+                                    facilityHeadName = string.IsNullOrEmpty(facilityHeadName) ? "None" : facilityHeadName;
+
+                                    // Hiển thị giá trị của biến
+                                    @Html.DisplayFor(modelItem => facilityHeadName)
+                                }
+                            }
+                        }
+                    </td>
+                    <td>@item.AssigneeFullName</td>
+                    <td>@item.RequestDate.ToString("dd/MM/yyyy")</td>
+                    <td>@item.SeverityLevels</td>
+                    <td>@item.RequestContent</td>
+                    @if (item.Status == "Completed")
+                    {
+                        <td><label class="badge badge-success" style="font-size: 0.8em;">@item.Status</label></td>
+                    }
+                    else
+                    {
+                        <td> <label class="badge badge-info" style="font-size: 0.8em;">@item.Status</label></td>
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+    <style>
+        .custom-button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 5px 10px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 14px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+            .custom-button:hover {
+                background-color: #0056b3;
+                color: #fff;
+            }
+    </style>
+}
