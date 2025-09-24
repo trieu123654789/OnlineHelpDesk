@@ -1,0 +1,159 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <title>Online Help Desk</title>
+    <!-- favicon -->
+    <link rel="shortcut icon" type="image/png" href="../images/favicon.png">
+    <meta name="description" content="" />
+    <meta name="author" content="Tooplate" />
+    <!-- Bootstrap core CSS -->
+    <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <!-- Additional CSS Files -->
+    <link href="https://fonts.googleapis.com/css?family=Lato:100,300,400,700,900" rel="stylesheet" />
+    <link rel="stylesheet" href="../Content/fontawesome.css" />
+    <link rel="stylesheet" href="../Content/style.css" />
+    <link rel="stylesheet" href="../Content/css/owl.css" />
+    <link rel="stylesheet" href="../Content/lightbox.css" />
+
+    <style>
+
+
+        form {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+
+
+        .gender-radio-group {
+            margin-bottom: 10px;
+        }
+
+        .gender-label {
+            margin-right: 23px;
+        }
+
+
+        form label {
+            color: black;
+            font-weight: bold;
+        }
+
+
+        form button,
+        form a {
+            margin-top: 10px;
+        }
+
+
+        label {
+            color: black;
+        }
+
+
+        .form-control {
+            width: 300px;
+            padding: 8px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<!--
+Tooplate 2116 Blugoon
+https://www.tooplate.com/view/2116-blugoon
+-->
+<body>
+    <div id="page-wraper">
+        <!-- Sidebar Menu -->
+        <div class="responsive-nav">
+            <i class="fa fa-bars" id="menu-toggle"></i>
+            <div id="menu" class="menu">
+                <i class="fa fa-times" id="menu-close"></i>
+                <div class="container">
+                    <div class="image">
+                        <a href="#"><img src="../images/logo1.jpg" alt="logo_OnlineHelpDesk" /></a>
+                    </div>
+                    <div class="author-content">
+                        @if (ViewBag.FullName != null)
+                        {
+                            <h5 style="color: white; font-weight:bold">Hello, @ViewBag.FullName</h5>
+                        }
+
+
+                    </div>
+                    <nav class="main-nav" role="navigation">
+                        <ul class="main-menu">
+                            <li><a href="@Url.Action("Create", "Enduser")">Create New Request</a></li>
+                            <li><a href="@Url.Action("Index", "Enduser")">View Requests</a></li>
+                            <li>
+                                <a href="@Url.Action("RequestHistory", "Enduser")">Requirement History</a>
+                            </li>
+                            <li>
+                                <a href="@Url.Action("Replies", "Enduser")">Reply of Assignee</a>
+                            </li>
+                            <li><a href="@Url.Action("Information", "Enduser")">Account Information</a></li>
+                            <br />
+                            @if (Session["AccountID"] != null)
+                            {
+                                <li>
+                                    <form action="@Url.Action("Logout", "Home")" method="post">
+                                        <input type="submit" value="Log out" class="btn btn-danger" />
+                                    </form>
+                                </li>
+                            }
+                        </ul>
+                    </nav>
+
+                    <div class="copyright-text">
+                        <p>
+                            Copyright 2023 OHD<br>
+                            Design: Online Help Desk Team
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <section class="section about-me" data-section="section1">
+            <div class="container" style="width:1200px">
+
+                <div class="section-heading">
+                    <div class="img1">
+                        <img src="../Images/bg1.jpg" width="770" height="300" / style="filter: brightness(80%);">
+
+                    </div>
+                    <div class="card">
+
+                        <div class="card-body">
+
+
+                            <div class="table-responsive">
+                                <div>
+                                    @RenderBody()
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+    </div>
+    <!-- Scripts -->
+    <!-- Bootstrap core JavaScript -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <script src="../assets/js/isotope.min.js"></script>
+    <script src="../assets/js/owl-carousel.js"></script>
+    <script src="../assets/js/lightbox.js"></script>
+    <script src="../assets/js/custom.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,183 @@
+﻿@model OnlineHelpDesk2.Models.Facility
+
+@{
+    ViewBag.Title = "EditFacility";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <title>Edit Account</title>
+    <meta name="description" content="" />
+    <meta name="author" content="Tooplate" />
+    <!-- Bootstrap core CSS -->
+    <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <!-- Additional CSS Files -->
+    <link href="https://fonts.googleapis.com/css?family=Lato:100,300,400,700,900" rel="stylesheet" />
+    <link rel="stylesheet" href="../Content/fontawesome.css" />
+    <link rel="stylesheet" href="../Content/style2.css" />
+    <link rel="stylesheet" href="../Content/css/owl.css" />
+    <link rel="stylesheet" href="../Content/lightbox.css" />
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            overflow-x: hidden;
+            background-color: #4AA0DD; /* Màu nền của trang */
+            color: #fff; /* Màu chữ chính */
+        }
+
+        #page-wraper {
+            width: 100%;
+            height: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #fff; /* Màu chữ tiêu đề */
+        }
+
+        .card {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+            width: 570px;
+            margin: 0 auto
+        }
+
+        .card-body {
+            padding: 20px;
+        }
+
+        table {
+            width: 100%;
+            margin-bottom: 1rem;
+            background-color: transparent;
+            border-collapse: collapse;
+            color: #000; /* Màu chữ trong bảng */
+        }
+
+        th,
+        td {
+            padding: 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        th {
+            background-color: #f8f9fa;
+        }
+
+        tbody tr:hover {
+            background-color: rgba(0, 123, 255, 0.1);
+        }
+
+        input[type="submit"] {
+            display: inline-block;
+            padding: 10px 20px;
+            text-decoration: none;
+            color: #fff;
+            background-color: #28a745;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+            input[type="submit"]:hover {
+                background-color: #228B22;
+            }
+
+        input[type="button"] {
+            display: inline-block;
+            padding: 10px 20px;
+            text-decoration: none;
+            color: #fff;
+            background-color: #ff0000;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+            input[type="button"]:hover {
+                background-color: #B80000;
+            }
+
+        .custom-button {
+            background-color: #28a745;
+            color: #fff;
+            border: none;
+            padding: 10px 10px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 14px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+            .custom-button:hover {
+                background-color: #228B22;
+                color: #fff;
+            }
+    </style>
+</head>
+
+<body>
+    <div id="page-wraper">
+        <div class="container">
+            <h1>Edit Facilities</h1>
+            @if (TempData["SuccessMessage"] != null)
+            {
+                <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+            }
+            <div class="card">
+                <div class="card-body">
+                    @using (Html.BeginForm())
+                    {
+                        @Html.AntiForgeryToken()
+                    <table class="table">
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        @Html.HiddenFor(model => model.FacilityID)
+                        <tbody>
+                            <tr>
+                                <td>@Html.LabelFor(model => model.FacilityName, htmlAttributes: new { @class = "control-label col-md-2" })</td>
+                                <td>@Html.EditorFor(model => model.FacilityName, new { htmlAttributes = new { @class = "form-control" } })</td>
+                                <td>@Html.ValidationMessageFor(model => model.FacilityName, "", new { @class = "text-danger" })</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                <h5>@ViewBag.Error</h5>
+                                <input type="submit" value="Save" class="btn btn-success" />
+                                <input class="badge badge-btn2" onclick="location.href='@Url.Action("Facilities", "Admin")'" type="button" value="Cancel" />
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var currentDate = new Date();
+            var formattedDate = currentDate.toISOString().slice(0, 10);
+            document.getElementById('FeedbackTime').value = formattedDate;
+        });
+    </script>
+</body>
+</html>

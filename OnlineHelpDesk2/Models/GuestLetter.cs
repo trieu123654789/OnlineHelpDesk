@@ -14,6 +14,7 @@ namespace OnlineHelpDesk2.Models
 
         [Required]
         [StringLength(1000)]
+        [Display(Name = "Request Content")]
         public string LetterContent { get; set; }
 
         [Required]

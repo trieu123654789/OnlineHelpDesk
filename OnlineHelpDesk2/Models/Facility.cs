@@ -19,6 +19,7 @@ namespace OnlineHelpDesk2.Models
 
         [Required]
         [StringLength(100)]
+        [Display(Name = "Facility Name")]
         public string FacilityName { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

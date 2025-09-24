@@ -1,0 +1,93 @@
+﻿@model IEnumerable<OnlineHelpDesk2.Models.UnassignedRequest>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/EndUser_LayoutPage.cshtml";
+}
+
+
+<a href="@Url.Action("Index", "Enduser")" class="badge badge-info">View Unassigned Requests</a>
+<a href="@Url.Action("ClosedRequests", "Enduser")" class="badge badge-info">View Closed Requests</a>
+<a href="@Url.Action("RejectedRequests", "Enduser")" class="badge badge-info">View Rejected Requests</a>
+<br />
+<br />
+@if (Model.Any())
+{
+    using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <table class="table" id="myTable" style="font-size: 12px;">
+            <thead>
+                <tr>
+                    <th width="5%">Request ID</th>
+                    <th>Requestor Name</th>
+                    <th>Facility Name</th>
+                    <th>Request Date</th>
+                    <th>Severity</th>
+                    <th width="35%">Description</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    if (@item.Status.Equals("Rejected"))
+                    {
+                        <tr>
+                            <td>@item.RequestID</td>
+                            <td>@item.RequestorFullName</td>
+                            <td>@item.FacilityName</td>
+                            <td>@item.RequestDate.ToString("dd/MM/yyyy")</td>
+                            <td>@item.SeverityLevels</td>
+                            <td>@item.RequestContent</td>
+                            <td><label class="badge badge-warning" style="font-size: 0.8em;">@item.Status</label></td>
+                            <td>
+                                @Html.ActionLink("View Reason", "ViewReason", new { id = item.RequestID }, new { @class = "custom-button", @style = "font-size: 0.8em;" })
+                            </td>
+                        </tr>
+                    }
+                    else
+                    {
+                        <tr>
+                            <td>@item.RequestID</td>
+                            <td>@item.RequestorFullName</td>
+                            <td>@item.FacilityName</td>
+                            <td>@item.RequestDate.ToString("dd/MM/yyyy")</td>
+                            <td>@item.SeverityLevels</td>
+                            <td>@item.RequestContent</td>
+                            <td><label class="badge badge-warning" style="font-size: 0.8em;">@item.Status</label></td>
+                            <td>
+                                @Html.ActionLink("Close Request", "CloseRequest", new { id = item.RequestID }, new { @class = "custom-button", @style = "font-size: 0.8em;" })
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+        <style>
+            .custom-button {
+                background-color: #007bff;
+                color: #fff;
+                border: none;
+                padding: 5px 10px;
+                text-align: center;
+                text-decoration: none;
+                display: inline-block;
+                font-size: 14px;
+                cursor: pointer;
+                border-radius: 4px;
+            }
+
+                .custom-button:hover {
+                    background-color: #0056b3;
+                    color: #fff;
+                }
+        </style>
+    }
+}
+else
+{
+<p style="color: #000">There are no unassigned requests.</p>
+}

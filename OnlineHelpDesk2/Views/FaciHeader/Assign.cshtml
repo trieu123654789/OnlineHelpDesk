@@ -1,0 +1,207 @@
+﻿@model OnlineHelpDesk2.Models.Request
+
+@{
+    ViewBag.Title = "Assign";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <title>Close Request</title>
+    <meta name="description" content="" />
+    <meta name="author" content="Tooplate" />
+    <!-- Bootstrap core CSS -->
+    <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <!-- Additional CSS Files -->
+    <link href="https://fonts.googleapis.com/css?family=Lato:100,300,400,700,900" rel="stylesheet" />
+    <link rel="stylesheet" href="../Content/fontawesome.css" />
+    <link rel="stylesheet" href="../Content/style2.css" />
+    <link rel="stylesheet" href="../Content/css/owl.css" />
+    <link rel="stylesheet" href="../Content/lightbox.css" />
+
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            overflow-x: hidden;
+        }
+
+        #page-wraper {
+            background: #4AA0DD no-repeat center center fixed;
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            -o-background-size: cover;
+            background-size: cover;
+            width: 100%;
+            height: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        .card {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+            width: 500px;
+            margin: 0 auto
+        }
+
+        .card-body {
+            padding: 20px;
+        }
+
+        form {
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            resize: vertical;
+        }
+
+        input[type="submit"] {
+            display: inline-block;
+            padding: 10px 20px;
+            text-decoration: none;
+            color: #fff;
+            background-color: #007bff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+
+        input[type="button"] {
+            display: inline-block;
+            padding: 10px 20px;
+            text-decoration: none;
+            color: #fff;
+            background-color: #ff0000;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .form-control {
+            width: 200px;
+            padding: 8px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+
+        .form-group p {
+            color: red;
+            font-style: italic;
+        }
+
+        input[type="submit"]:hover,
+        a:hover {
+            background-color: #B80000;
+        }
+
+        button:hover {
+            background-color: #228B22;
+        }
+
+
+        .btn-success {
+            background-color: #28a745;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin-right: 10px;
+        }
+
+        .btn-danger {
+            background-color: #dc3545;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+        }
+    </style>
+
+</head>
+<body>
+    <div id="page-wraper">
+        <div class="container">
+            <h1 style="color:white">Assign Request</h1>
+            <div class="card">
+                <div class="card-body">
+                    <form action="@Url.Action("Assign", "FaciHeader")" method="post" enctype="multipart/form-data">
+                        @Html.HiddenFor(model => model.RequestID)
+
+                        <div class="col-md-6">
+                            @if (ViewBag.Assignees != null && ViewBag.Assignees.Count > 0)
+                            {
+                                <h2>List of Assignees:</h2>
+                                <select class="form-control" id="AssigneeID" name="AssigneeID">
+                                    @foreach (var assignee in ViewBag.Assignees)
+                                    {
+                                        <option value="@assignee.AccountID">@assignee.Fullname</option>
+                                    }
+                                </select>
+                            }
+                            else
+                            {
+                                <p>No assignees found.</p>
+                            }
+                        </div>
+
+                        <button type="submit" class="btn btn-success" style="cursor: pointer">Save</button>
+                        <a href="@Url.Action("Index", "FaciHeader")" class="btn btn-danger">Cancel</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- Scripts -->
+        <!-- Bootstrap core JavaScript -->
+        <script src="vendor/jquery/jquery.min.js"></script>
+        <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+        <script src="../assets/js/isotope.min.js"></script>
+        <script src="../assets/js/owl-carousel.js"></script>
+        <script src="../assets/js/lightbox.js"></script>
+        <script src="../assets/js/custom.js"></script>
+    </div>
+</body>
+
+
+</html>

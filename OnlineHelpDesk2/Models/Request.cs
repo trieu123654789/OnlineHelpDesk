@@ -14,7 +14,7 @@ namespace OnlineHelpDesk2.Models
             CloseRequests = new HashSet<CloseRequest>();
             Feedbacks = new HashSet<Feedback>();
             Replies = new HashSet<Reply>();
-            Reports = new HashSet<Report>();
+            SummaryReports = new HashSet<SummaryReport>();
         }
 
         public int RequestID { get; set; }
@@ -31,7 +31,7 @@ namespace OnlineHelpDesk2.Models
         [StringLength(50)]
         public string Status { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Description is required.")]
         [StringLength(1000)]
         public string RequestContent { get; set; }
 
@@ -55,6 +55,6 @@ namespace OnlineHelpDesk2.Models
         public virtual ICollection<Reply> Replies { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Report> Reports { get; set; }
+        public virtual ICollection<SummaryReport> SummaryReports { get; set; }
     }
 }

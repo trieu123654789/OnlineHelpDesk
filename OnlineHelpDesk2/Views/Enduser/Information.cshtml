@@ -1,0 +1,102 @@
+﻿@model OnlineHelpDesk2.Models.Account
+@{
+    ViewBag.Title = "Information";
+    Layout = "~/Views/Shared/EndUserInfor_LayoutPage.cshtml";
+}
+<h2 style="color: #000; font-weight: bold; text-align: center;">Change Account Information</h2>
+
+@if (!string.IsNullOrEmpty(ViewBag.Successfully))
+{
+    <div class="alert alert-success col-md-6 container justify-content-center" role="alert">
+        @ViewBag.Successfully
+    </div>
+}
+
+<form action="@Url.Action("Information", "Enduser")" method="post">
+    <input type="hidden" name="AccountID" value="@Model.AccountID" />
+    @Html.HiddenFor(model => model.AccountID)
+
+    <div class="row mt-3 mx-lg-5">
+        <div class="col-md-6 mb-3">
+            <label for="Username">Username</label>
+            <input type="text"
+                   class="form-control"
+                   id="Username"
+                   name="Username"
+                   placeholder="Username"
+                   value="@Model.Username"
+                   readonly />
+        </div>
+
+        <div class="col-md-6 mb-3">
+            <label for="Email">Email</label>
+            <input type="email"
+                   class="form-control"
+                   id="Email"
+                   name="Email"
+                   placeholder="Email"
+                   value="@Model.Email"
+                   readonly />
+        </div>
+
+        <div class="col-md-6 mb-3">
+            <label for="Fullname">Fullname</label>
+            <input type="text"
+                   class="form-control"
+                   id="Fullname"
+                   name="Fullname"
+                   placeholder="Fullname"
+                   value="@Model.Fullname"
+                   required />
+        </div>
+
+        <div class="col-md-6 mb-3">
+            <label for="Gender">Gender</label>
+            <div class="gender-radio-group">
+                @if (Model.Gender == "Male")
+                {
+                    <label class="form-check-label gender-label" for="Male">Male</label>
+                    <input type="radio" class="form-check-input" id="Male" name="Gender" value="Male" checked />
+                    <label class="form-check-label gender-label" for="Female">Female</label>
+                    <input type="radio" class="form-check-input" id="Female" name="Gender" value="Female" />
+                }
+                else
+                {
+                    <label class="form-check-label gender-label" for="Male">Male</label>
+                    <input type="radio" class="form-check-input" id="Male" name="Gender" value="Male" />
+                    <label class="form-check-label gender-label" for="Female">Female</label>
+                    <input type="radio" class="form-check-input" id="Female" name="Gender" value="Female" checked />
+                }
+            </div>
+        </div>
+
+        <div class="col-md-6 mb-3">
+            <label for="Birthday">Birthday</label>
+            <input type="date"
+                   class="form-control"
+                   id="Birthday"
+                   name="Birthday"
+                   placeholder="Birthday"
+                   value="@ViewBag.Birthday"
+                   required />
+        </div>
+
+        <div class="col-md-6 mb-3">
+            <label for="Phone">Phone</label>
+            <input type="text"
+                   class="form-control"
+                   id="Phone"
+                   name="Phone"
+                   placeholder="Phone"
+                   value="@Model.Phone"
+                   required />
+        </div>
+    </div>
+
+    <div class="text-center mt-4">
+        <button type="submit" class="btn btn-success">Save</button>
+        <a href="@Url.Action("ChangePassword", "Enduser")" class="btn btn-danger ml-2">Change Password</a>
+    </div>
+</form>
+
+

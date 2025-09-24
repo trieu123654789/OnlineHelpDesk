@@ -9,20 +9,19 @@ namespace OnlineHelpDesk2.Models
     [Table("Report")]
     public partial class Report
     {
-        public int ReportID { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Report()
+        {
+            SummaryReports = new HashSet<SummaryReport>();
+        }
 
-        public DateTime ReportDate { get; set; }
+        [Key]
+        public int ReportMonth { get; set; }
 
-        public int RequestID { get; set; }
+        [StringLength(50)]
+        public string Month { get; set; }
 
-        public int ReplyID { get; set; }
-
-        public int? FeedbackID { get; set; }
-
-        public virtual Feedback Feedback { get; set; }
-
-        public virtual Reply Reply { get; set; }
-
-        public virtual Request Request { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<SummaryReport> SummaryReports { get; set; }
     }
 }

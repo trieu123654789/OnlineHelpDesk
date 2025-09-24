@@ -1,0 +1,45 @@
+﻿@model IEnumerable<OnlineHelpDesk2.Models.RequestHistory>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/Assignee_LayoutPage.cshtml";
+}
+
+<table class="table" id="workInProgressTable">
+    <thead>
+        <tr>
+            <th width="80px">RequestID</th>
+            <th width="90px">RequestorID</th>
+            <th>Requestor Name</th>
+            <th>Facility Name</th>
+            <th>Request Date</th>
+            <th>Request Content</th>
+            <th>Severity Level</th>
+            <th>Status</th>
+            <th>Action</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td width="80px">@item.RequestID</td>
+                <td width="90px">@item.RequestorID</td>
+                <td>@item.RequestorFullName</td>
+                <td>@item.FacilityName</td>
+                <td>@item.RequestDate.ToString("dd/MM/yyyy")</td>
+                <td>@item.RequestContent</td>
+                <td>@item.SeverityLevels</td>
+                <td><label class="badge badge-warning" style="font-size: 0.8em;">@item.Status</label></td>
+                <td>
+                    @Html.ActionLink("Reply", "ReplyToRequest", "Assignee", new { requestId = @item.RequestID }, new { @class = "btn btn-primary", @id = "completeLink_" + @item.RequestID })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+<div class="alert alert-success" id="successMessage" style="display:none">
+    <strong>Success!</strong> Reply sent successfully.
+</div>

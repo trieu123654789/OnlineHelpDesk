@@ -8,7 +8,7 @@ namespace OnlineHelpDesk2.Models
     public partial class OHDDBContext : DbContext
     {
         public OHDDBContext()
-            : base("name=OHDConn")
+            : base("name=OHDDBContext")
         {
         }
 
@@ -20,6 +20,7 @@ namespace OnlineHelpDesk2.Models
         public virtual DbSet<Reply> Replies { get; set; }
         public virtual DbSet<Report> Reports { get; set; }
         public virtual DbSet<Request> Requests { get; set; }
+        public virtual DbSet<SummaryReport> SummaryReports { get; set; }
         public virtual DbSet<UserType> UserTypes { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
@@ -81,6 +82,11 @@ namespace OnlineHelpDesk2.Models
                 .Property(e => e.FeedbackContent)
                 .IsUnicode(false);
 
+            modelBuilder.Entity<Feedback>()
+                .HasMany(e => e.SummaryReports)
+                .WithRequired(e => e.Feedback)
+                .WillCascadeOnDelete(false);
+
             modelBuilder.Entity<GuestLetter>()
                 .Property(e => e.LetterContent)
                 .IsUnicode(false);
@@ -98,8 +104,17 @@ namespace OnlineHelpDesk2.Models
                 .IsUnicode(false);
 
             modelBuilder.Entity<Reply>()
-                .HasMany(e => e.Reports)
+                .HasMany(e => e.SummaryReports)
                 .WithRequired(e => e.Reply)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<Report>()
+                .Property(e => e.Month)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Report>()
+                .HasMany(e => e.SummaryReports)
+                .WithRequired(e => e.Report)
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<Request>()
@@ -130,7 +145,7 @@ namespace OnlineHelpDesk2.Models
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<Request>()
-                .HasMany(e => e.Reports)
+                .HasMany(e => e.SummaryReports)
                 .WithRequired(e => e.Request)
                 .WillCascadeOnDelete(false);
 

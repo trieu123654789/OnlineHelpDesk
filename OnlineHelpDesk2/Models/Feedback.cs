@@ -12,7 +12,7 @@ namespace OnlineHelpDesk2.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Feedback()
         {
-            Reports = new HashSet<Report>();
+            SummaryReports = new HashSet<SummaryReport>();
         }
 
         public int FeedbackID { get; set; }
@@ -28,6 +28,6 @@ namespace OnlineHelpDesk2.Models
         public virtual Request Request { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Report> Reports { get; set; }
+        public virtual ICollection<SummaryReport> SummaryReports { get; set; }
     }
 }

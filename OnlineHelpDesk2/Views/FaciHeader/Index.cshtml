@@ -1,0 +1,35 @@
+﻿@model List<OnlineHelpDesk2.Models.UnassignedRequest>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/FaciHeader_LayoutPage.cshtml";
+}
+
+<table class="table" id="myTable" style="font-size: 12px;">
+    <thead>
+        <tr>
+            <th width="5%">Request ID</th>
+            <th>Requestor Name</th>
+            <th>Request Date</th>
+            <th width="35%">Request Content</th>
+            <th>Severity Level</th>
+            <th>Status</th>
+            <th>Action</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td width="80px">@item.RequestID</td>
+                <td>@item.RequestorFullName</td>
+                <td>@item.RequestDate.ToString("dd/MM/yyyy")</td>
+                <td>@item.RequestContent</td>
+                <td>@item.SeverityLevels</td>
+                <td><label class="badge badge-warning" style="font-size: 0.8em;">@item.Status</label></td>
+                <td> @Html.ActionLink("Assign", "Assign", new { id = item.RequestID }, new { @class = "badge badge-btn1", @style = "font-size: 0.8em;" })  @Html.ActionLink("Deny", "CloseRequest", new { id = item.RequestID }, new { @class = "badge badge-btn2", @style = "font-size: 0.8em;" })</td>
+            </tr>
+        }
+    </tbody>
+</table>
+

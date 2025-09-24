@@ -1,0 +1,32 @@
+﻿@model List<OnlineHelpDesk2.Models.GuestLetter>
+@{
+    ViewBag.Title = "GuestRequest";
+    Layout = "~/Views/Shared/Admin_LayoutPage.cshtml";
+}
+<h3 style="color: #2279BD; font-weight: bold;">Guest Requests</h3>
+<div>
+    <table class="table" id="myTable" style="font-size: 14px;">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Mail</th>
+                <th>Request Content</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.Name)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Mail)</td>
+                    <td>@Html.DisplayFor(modelItem => item.LetterContent)</td>
+                    <td>
+                        @Html.ActionLink("Delete", "DeleteGuestRequest", new { id = item.LetterID }, new { @class = "badge badge-btn2" })
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+

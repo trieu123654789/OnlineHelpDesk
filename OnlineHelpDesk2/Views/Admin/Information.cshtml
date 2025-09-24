@@ -1,0 +1,212 @@
+@model OnlineHelpDesk2.Models.Account
+@{
+    ViewBag.Title = "Information";
+    Layout = "~/Views/Shared/Admin_LayoutPage.cshtml";
+}
+
+<style>
+    .field-label {
+        font-weight: bold;
+        color: #333;
+        margin-bottom: 8px;
+        display: block;
+        font-size: 14px;
+    }
+    
+    .form-group {
+        margin-bottom: 25px;
+    }
+    
+    .form-control {
+        padding: 10px 12px;
+        font-size: 14px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+    }
+    
+    .form-control:focus {
+        border-color: #007bff;
+        box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+    }
+    
+    .gender-container {
+        display: flex;
+        gap: 30px;
+        align-items: center;
+        margin-top: 8px;
+        padding: 8px 0;
+    }
+    
+    .gender-item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+    
+    .gender-item input[type="radio"] {
+        margin: 0;
+        margin-right: 5px;
+    }
+    
+    .gender-item label {
+        margin: 0 !important;
+        font-weight: normal !important;
+        cursor: pointer !important;
+        color: #333 !important;
+        font-size: 14px !important;
+        display: inline-block !important;
+        margin-left: 5px !important;
+    }
+    
+    .readonly-field {
+        background-color: #f8f9fa !important;
+        cursor: not-allowed;
+        color: #6c757d;
+        border-color: #ced4da;
+    }
+    
+    .form-container {
+        background-color: #ffffff;
+        padding: 30px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        margin-top: 20px;
+    }
+    
+    .btn-lg {
+        padding: 12px 30px;
+        font-size: 16px;
+        margin: 0 10px;
+    }
+    
+    /* Force gender labels to be visible */
+    .gender-item input[type="radio"] + label {
+        display: inline-block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        color: #333 !important;
+        font-size: 14px !important;
+        font-weight: normal !important;
+        margin-left: 8px !important;
+    }
+    
+    .gender-item input[type="radio"] {
+        display: inline-block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        margin-right: 8px !important;
+    }
+</style>
+
+<div class="container-fluid">
+    <h2 style="color: #000; font-weight: bold; text-align: center; margin-bottom: 30px;">Change Account Information</h2>
+
+    @if (!string.IsNullOrEmpty(ViewBag.Successfully))
+    {
+        <div class="alert alert-success col-md-8 mx-auto" role="alert">
+            @ViewBag.Successfully
+        </div>
+    }
+
+    <div class="row justify-content-center">
+        <div class="col-md-10 col-lg-8">
+            <div class="form-container">
+                <form action="@Url.Action("Information", "Admin")" method="post">
+                    <input type="hidden" name="AccountID" value="@Model.AccountID" />
+                    @Html.HiddenFor(model => model.AccountID)
+                    <div class="row">
+                        <!-- Username Field -->
+                        <div class="col-md-6 form-group">
+                            <label class="field-label">Username:</label>
+                            <input type="text"
+                                   class="form-control readonly-field"
+                                   id="Username"
+                                   name="Username"
+                                   value="@Model.Username"
+                                   readonly />
+                        </div>
+
+                        <!-- Email Field -->
+                        <div class="col-md-6 form-group">
+                            <label class="field-label">Email:</label>
+                            <input type="email"
+                                   class="form-control readonly-field"
+                                   id="Email"
+                                   name="Email"
+                                   value="@Model.Email"
+                                   readonly />
+                        </div>
+
+                        <!-- Full Name Field -->
+                        <div class="col-md-6 form-group">
+                            <label class="field-label">Full Name:</label>
+                            <input type="text"
+                                   class="form-control"
+                                   id="Fullname"
+                                   name="Fullname"
+                                   value="@Model.Fullname"
+                                   required />
+                        </div>
+
+                        <!-- Gender Field -->
+                        <div class="col-md-6 form-group">
+                            <label class="field-label">Gender:</label>
+                            <div style="display: flex; gap: 30px; align-items: center; margin-top: 10px; padding: 10px 0;">
+                                @if (Model.Gender == "Male")
+                                {
+                                    <div style="display: flex; align-items: center; gap: 8px;">
+                                        <input type="radio" id="Male" name="Gender" value="Male" checked style="margin: 0;" />
+                                        <label for="Male" style="margin: 0; font-weight: normal; cursor: pointer; color: #333; font-size: 14px;">Male</label>
+                                    </div>
+                                    <div style="display: flex; align-items: center; gap: 8px;">
+                                        <input type="radio" id="Female" name="Gender" value="Female" style="margin: 0;" />
+                                        <label for="Female" style="margin: 0; font-weight: normal; cursor: pointer; color: #333; font-size: 14px;">Female</label>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div style="display: flex; align-items: center; gap: 8px;">
+                                        <input type="radio" id="Male" name="Gender" value="Male" style="margin: 0;" />
+                                        <label for="Male" style="margin: 0; font-weight: normal; cursor: pointer; color: #333; font-size: 14px;">Male</label>
+                                    </div>
+                                    <div style="display: flex; align-items: center; gap: 8px;">
+                                        <input type="radio" id="Female" name="Gender" value="Female" checked style="margin: 0;" />
+                                        <label for="Female" style="margin: 0; font-weight: normal; cursor: pointer; color: #333; font-size: 14px;">Female</label>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+
+                        <!-- Birthday Field -->
+                        <div class="col-md-6 form-group">
+                            <label class="field-label">Birthday:</label>
+                            <input type="date"
+                                   class="form-control"
+                                   id="Birthday"
+                                   name="Birthday"
+                                   value="@ViewBag.Birthday"
+                                   required />
+                        </div>
+
+                        <!-- Phone Field -->
+                        <div class="col-md-6 form-group">
+                            <label class="field-label">Phone:</label>
+                            <input type="text"
+                                   class="form-control"
+                                   id="Phone"
+                                   name="Phone"
+                                   value="@Model.Phone"
+                                   required />
+                        </div>
+                    </div>
+
+                    <div class="text-center mt-4">
+                        <button type="submit" class="btn btn-success btn-lg">SAVE</button>
+                        <a href="@Url.Action("ChangePassword", "Admin")" class="btn btn-danger btn-lg ml-3">Change Password</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
