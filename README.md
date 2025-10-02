@@ -33,16 +33,37 @@ An ASP.NET MVC 5 application that provides a simple internal help desk for submi
    - Open `OnlineHelpDesk2.sln` in Visual Studio
    - Allow NuGet to restore packages on first load
 
-3) Configure database
+3) Database Setup
+   **Option A: Using the provided SQL script (Recommended for HR/Testing)**
+   - Ensure SQL Server (LocalDB, Express, or Full) is installed and running
+   - Open SQL Server Management Studio (SSMS) or any SQL client
+   - Connect to your SQL Server instance
+   - Create a new database named `OnlineHelpDesk` or use the script to create it
+   - Open and execute the `online-help-desk.sql` file from the project root
+     - This will create all tables, relationships, and insert sample data
+     - Sample accounts are included for testing (see "Default Accounts" section below)
+   - Update the connection string in `OnlineHelpDesk2/Web.config`:
+     ```xml
+     <connectionStrings>
+       <add name="OHDDBContext" 
+            connectionString="Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=OnlineHelpDesk;Integrated Security=True;MultipleActiveResultSets=True" 
+            providerName="System.Data.SqlClient" />
+     </connectionStrings>
+     ```
+   
+   **Option B: Using Entity Framework Code-First (For Developers)**
    - In `OnlineHelpDesk2/Web.config`, update the connection string named `OHDDBContext` to point to your SQL Server instance
    - Example LocalDB: `Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=OnlineHelpDeskDb;Integrated Security=True;MultipleActiveResultSets=True`
+   - Run the application - EF will create the database automatically (but without sample data)
 
 4) Run the app
    - Set `OnlineHelpDesk2` as the startup project
    - Press F5 to run with IIS Express
 
-5) Seeding/admin account
-   - If you use a fresh database, create an initial Admin account directly in the database or add a lightweight seeding routine as needed
+5) Ready to Use
+   - The database is now configured with sample data and accounts
+   - See the "Easy Database Setup" section above for login credentials
+   - All sample accounts use "123456" as password for testing purposes
 
 ### Common Tasks
 - Change site branding and navigation: edit layout files under `OnlineHelpDesk2/Views/Shared/`
@@ -62,10 +83,110 @@ An ASP.NET MVC 5 application that provides a simple internal help desk for submi
 - Add a GitHub Actions workflow to build the solution and run tests on push/PR
 - Example step: `windows-latest`, setup MSBuild, restore NuGet, build, run tests
 
+### Easy Database Setup (Recommended for HR)
+
+**🚀 Quick Setup (1-Click Method):**
+1. **Check Requirements:** Double-click `check-requirements.ps1` to verify your system
+2. **Auto Setup:** Double-click `setup-database.bat` to automatically create the database
+3. **Run Application:** Open `OnlineHelpDesk2.sln` in Visual Studio and press F5
+
+*That's it! The scripts will handle everything automatically.*
+
+**📋 Sample Accounts (Pre-configured):**
+
+| Username | Password | Role |
+|----------|----------|------|
+| admin | 123456 | Administrator |
+| quoctrieu | 123456 | Student |
+| giathoai | 123456 | Student |
+| thuy | 123456 | Facility Head |
+| giabao | 123456 | Assignee |
+
+**🔧 What the Scripts Do:**
+- `check-requirements.ps1`: Verifies .NET Framework, SQL Server LocalDB, Visual Studio, and project files
+- `setup-database.bat`: Creates LocalDB instance, imports schema, updates Web.config automatically
+
+---
+
+### Manual Database Setup Guide (Alternative Method)
+
+**Prerequisites:**
+1. Install SQL Server Express (free) from Microsoft's website
+2. Install SQL Server Management Studio (SSMS) - free download from Microsoft
+
+**Step-by-Step Database Setup:**
+
+1. **Start SQL Server Management Studio (SSMS)**
+   - Open SSMS from Start Menu
+   - Connect to your local SQL Server instance (usually `(localdb)\MSSQLLocalDB` or `.\SQLEXPRESS`)
+
+2. **Create the Database**
+   - Right-click on "Databases" in Object Explorer
+   - Select "New Database..."
+   - Name it `OnlineHelpDesk`
+   - Click "OK"
+
+3. **Import the Database Schema and Data**
+   - Right-click on the `OnlineHelpDesk` database you just created
+   - Select "New Query"
+   - Open the `online-help-desk.sql` file from the project folder
+   - Copy all contents and paste into the query window
+   - Click "Execute" (or press F5)
+   - Wait for "Commands completed successfully" message
+
+4. **Verify the Setup**
+   - Expand the `OnlineHelpDesk` database in Object Explorer
+   - You should see tables like: Accounts, Requests, Facilities, etc.
+   - Right-click on "Accounts" table → "Select Top 1000 Rows" to verify sample data exists
+
+5. **Update Application Configuration**
+   - Open the project in Visual Studio
+   - Navigate to `OnlineHelpDesk2/Web.config`
+   - Find the `<connectionStrings>` section
+   - Update the connection string to match your SQL Server instance:
+     ```xml
+     <add name="OHDDBContext" 
+          connectionString="Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=OnlineHelpDesk;Integrated Security=True;MultipleActiveResultSets=True" 
+          providerName="System.Data.SqlClient" />
+     ```
+
+**Testing the Application:**
+- Run the application (F5 in Visual Studio)
+- Navigate to the login page
+- Use admin credentials: Username: `admin`, Password: `123456`
+
 ### Troubleshooting
-- “Cannot attach database” – verify the connection string and SQL Server instance
-- NuGet errors – run `Tools → NuGet Package Manager → Restore` or `Update-Package -reinstall`
-- 404/route issues – check `RouteConfig.cs` and controller/action names
+
+**🔧 Automated Setup Issues:**
+
+| Problem | Solution |
+|---------|----------|
+| **Script won't run** | Right-click `.ps1` file → "Run with PowerShell" or run: `Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser` |
+| **LocalDB not found** | Download SQL Server Express LocalDB from [Microsoft](https://www.microsoft.com/en-us/sql-server/sql-server-downloads) |
+| **"Access denied"** | Run Command Prompt as Administrator before running `setup-database.bat` |
+| **Database already exists** | Normal behavior - script will use existing database |
+| **PowerShell execution policy** | Open PowerShell as Admin: `Set-ExecutionPolicy RemoteSigned` |
+
+**📋 Common Application Issues:**
+
+| Problem | Solution |
+|---------|----------|
+| "Cannot attach database" | Verify connection string and SQL Server instance |
+| "Login failed" | Ensure SQL Server is running and connection string is correct |
+| NuGet errors | Run `Tools → NuGet Package Manager → Restore` |
+| 404/route issues | Check `RouteConfig.cs` and controller/action names |
+
+**🔄 Quick Reset Process:**
+If something goes wrong, reset everything:
+1. **Delete Database:** Open SSMS → Connect to `(localdb)\MSSQLLocalDB` → Right-click "OnlineHelpDesk" → Delete
+2. **Re-run Setup:** Double-click `setup-database.bat` again
+3. **Alternative:** Use SQL command: `DROP DATABASE OnlineHelpDesk`
+
+**💡 Pro Tips:**
+- Always run scripts from the project root directory
+- Check Windows Event Viewer for detailed error messages
+- Ensure no antivirus is blocking the scripts
+- LocalDB runs automatically when accessed - no manual start needed
 
 ### License
 This project is provided for educational/portfolio purposes. Add a license if you plan to distribute.
